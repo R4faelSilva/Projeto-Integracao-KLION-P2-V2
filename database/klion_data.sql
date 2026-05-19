@@ -10,7 +10,7 @@ CREATE TABLE info_usuario_calculo (
     id_infoCalculo  INT AUTO_INCREMENT PRIMARY KEY,
     renda_anual DECIMAL(9, 2),
     deducoes DECIMAL(9, 2),
-    dependentes INT,
+    dependentes INTEGER,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuario(id_usuario)
 );
