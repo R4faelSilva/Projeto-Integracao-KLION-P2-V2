@@ -1,7 +1,6 @@
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome_usuario VARCHAR(160) NOT NULL,
-    data_nasc_usuario DATE,
     email_usuario VARCHAR(180) NOT NULL,
     senha_usuario VARCHAR(255) NOT NULL
 );
