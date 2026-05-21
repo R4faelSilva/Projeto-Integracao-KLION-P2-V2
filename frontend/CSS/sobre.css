@@ -1,5 +1,6 @@
 .fundo-sobre {
   background: var(--cinza-claro);
+  flex: 1;
 }
 
 .section h2 {

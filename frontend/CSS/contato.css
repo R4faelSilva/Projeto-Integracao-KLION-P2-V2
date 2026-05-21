@@ -1,3 +1,8 @@
+.contato{
+    background: var(--cinza-claro);
+    flex: 1;
+}
+
 .TituloFlexContato {
     display: flex;
     flex-direction: column;
@@ -12,7 +17,7 @@
 }
 .tituloContato p {
     color: #333333;
-    font-size: 12px;
+    font-size: 15px;
     max-width: 500px;
     margin: auto;
 }
