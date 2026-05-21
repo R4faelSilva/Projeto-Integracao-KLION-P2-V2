@@ -2,78 +2,35 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova senha — Klion</title>
+    <title>Nova senha</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .login-box { width: 100%; max-width: 420px; padding: 1rem; }
-        .logo-center { text-align: center; margin-bottom: 2rem; }
-        .logo-center a { font-size: 2rem; font-weight: 600; color: var(--branco); text-decoration: none; }
-        .logo-center a span { color: var(--azul-brilhante); }
-        .logo-center p { color: var(--texto-muted); font-size: 0.875rem; margin-top: 0.25rem; }
-    </style>
 </head>
 <body>
+    <h1>Digite sua nova senha</h1>
+    <input type="password" id="novaSenha" placeholder="Nova senha"><br>
+    <button onclick="redefinir()">Redefinir senha</button>
 
-<div class="login-box">
-    <div class="logo-center">
-        <a href="/">K<span>lion</span></a>
-        <p>Crie uma nova senha</p>
-    </div>
+    <script>
+        async function redefinir(){
+            // pega o token da URL
+            const params = new URLSearchParams(window.location.search)
+            const token = params.get("token")
 
-    <div class="card">
-        <div id="alerta" class="alert"></div>
+            const novaSenha = document.getElementById("novaSenha").value
 
-        <div class="form-group">
-            <label>Nova senha</label>
-            <input type="password" id="novaSenha" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
-        </div>
+            const res = await fetch("/nova-senha", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token, novaSenha })
+            })
 
-        <button class="btn" onclick="redefinir()">Salvar nova senha</button>
-    </div>
-</div>
+            const data = await res.json()
+            alert(data.mensagem)
 
-<script>
-    async function redefinir(){
-        const params = new URLSearchParams(window.location.search)
-        const token = params.get("token")
-        const novaSenha = document.getElementById("novaSenha").value
-        const alerta = document.getElementById("alerta")
-
-        if(!token){
-            alerta.style.display = "block"
-            alerta.textContent = "Link inválido!"
-            alerta.className = "alert alert-erro"
-            return
+            if(data.mensagem === "Senha alterada com sucesso!"){
+                window.location.href = "/login.html"
+            }
         }
-
-        if(!novaSenha || novaSenha.length < 6){
-            alerta.style.display = "block"
-            alerta.textContent = "A senha deve ter pelo menos 6 caracteres!"
-            alerta.className = "alert alert-erro"
-            return
-        }
-
-        const res = await fetch("/nova-senha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token, novaSenha })
-        })
-
-        const data = await res.json()
-
-        alerta.style.display = "block"
-        alerta.textContent = data.mensagem
-
-        if(data.mensagem === "Senha alterada com sucesso!"){
-            alerta.className = "alert alert-sucesso"
-            setTimeout(() => { window.location.href = "/login.html" }, 2000)
-        } else {
-            alerta.className = "alert alert-erro"
-        }
-    }
-</script>
-
+    </script>
 </body>
 </html>

@@ -10,6 +10,5 @@ const Postagem = sequelize.define('Postagem', {
     }
 })
 
-Postagem.sync({ alter: true })
 
 module.exports = Postagem
